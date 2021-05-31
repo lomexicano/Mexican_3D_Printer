@@ -1,0 +1,39 @@
+$${
+
+//	MEXICAN 3D PRINTER - auxiliary script to save a 14x17x14 area	;
+//	From lomexicano												;
+//	Discord Tag: lomexicano#0001								;
+//	Discord ID: 277301646050983936								;
+
+//	Note that you must be at the North-East corner of the building	;
+//  The area copied will be saved in your macros/logs folder!
+
+#x_limit = 13;
+#y_limit = 16;
+#z_limit = 13;
+
+unset(&array[]);
+
+#x_limit = #x_limit * -1;
+
+unsafe(0);
+	for(#y,0,%#y_limit%);
+		for(#z,0,%#z_limit%);
+			for(#x,0,%#x_limit%);
+				getidrel(%#x%,%#y%,%#z%,&id,#data);
+				if(&id != "air");
+					#logto_x = #x - #x_limit;
+					#logto_z = #z_limit - #z;
+					push(&array[],"%#logto_x% %#y% %#logto_z% %&id%:%#data%");
+				endif;
+			next;
+		next;
+	next;
+endunsafe;
+join(",",&array[],&logto);
+
+time(&log,"yyyy_MM_dd hh_mm_ss");
+logto("chunk_house_x %&log%.txt","%&logto%");
+log("&f&l[&2&lMA&f&lC&4&lRO&f&l] &aDone!");
+log("&f&l[&2&lMA&f&lC&4&lRO&f&l] &fString saved in &echunk_house_x %&log%.txt");
+}$$
